@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>Control panel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="./style.css" />-->
+    <!--<script src="script.js"></script>-->
+    <style>
+      body {
+        background-color: #c1c1c1;
+				font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      #mom-div {
+        width: 800px;
+        padding: 20px;
+        margin: auto;
+				margin-top: 50px;
+        background-color: #000;
+				text-align: center;
+				font-size: 25px;
+      }
+
+      #first-head {      
+        color: #ffffff;
+				padding: 5px;
+      }
+
+      #first-child, #second-child {
+        width: 600px;
+        color: #fff;
+				margin: auto;
+      }
+
+      #temp-display, #hum-display {
+        width: 200px;
+        height: 50px;
+        font-size: 30px;
+				margin: auto;
+				color: #fff;
+      }
+
+			button {
+				border-radius: 35px;
+				background-color: #fff;
+				padding: 20px;
+        font-size: 30px;
+				margin-top: 50px;
+				margin-left: 15px;
+				margin-right: 15px;
+		
+			}
+    </style>
+  </head>
+
+  <body>
+    <div id="mom-div">
+      <div id="first-head">
+        <h1>Huoneen lämpötila</h1>
+      </div>
+
+      <div id="first-child">
+				<div id="temp-box"><p>Lämpötila:</p>
+					<div id="temp-display"></div>
+
+				</div>
+				<div id = "hum-box"><p>Ilmankosteus:</p>
+					<div id="hum-display"></div>
+				</div>
+      </div>
+
+      <div id="second-child">
+        <button id="start-button" onclick="activity('start')">Lämmitys on</button>
+        <button id="stop-button" onclick="activity('stop')">Lämmitys off</button>
+
+				<p id="hauska-viesti">Nämä napit ei toimi, sori.<br>
+				Kiva kuitenki et kävit ja toivottavasti näit edes lukuja!</p>
+
+      </div>
+    </div>
+
+
+    <script>
+			//hakee lämpötilat näytölle serveriltä
+			getvalues();
+
+			function getvalues() {
+        fetch("/data", {
+          method: "post",
+        })
+          .then((res) => res.json())
+          .then((json) => setvalues(json));
+      }
+
+			//tää koittaa ohjata servoo, mut ei toimi
+			function control_servo(x) {
+					let order = x;
+					const url = "/api/give_orders";
+					var tojson = {}
+					
+					if (order == "1") {
+						tojson.tell_servo = "1";
+					}
+					else if (order == "0") {
+						tojson.tell_servo = "0";
+					}
+				
+					//en tiiä mitä tää tekee
+        (async () => {
+          const rawResponse = await fetch(url, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(tojson),
+          });
+				});
+			}
+
+      //Asettaa tiedot serverille
+      function setvalues(json) {
+
+        let temp = JSON.parse(json.arvot).temperature.toFixed(2);
+        document.getElementById("temp-display").innerHTML = temp + " °C";
+
+        let hum = JSON.parse(json.arvot).humidity.toFixed(2);
+        document.getElementById("hum-display").innerHTML = hum + " %";
+
+      }
+
+			//tää kertois servolle et sammutaanko vai pyöritäänkö 
+      function activity(x) {
+        let x = x;
+
+        if (x == "start") 
+				{
+					console.log("juu painoit käynnistä");
+          control_servo("1");
+          
+        } 
+				else if (x == "stop") 
+				{
+					console.log("juu painoit sammuta");
+          control_servo("0");
+
+        } 
+      }
+    </script>
+  </body>
+</html>
