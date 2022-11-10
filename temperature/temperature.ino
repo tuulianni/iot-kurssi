@@ -420,11 +420,11 @@ void pingServer() {
     pingResult = WiFi.ping(servername);
 
     if (pingResult >= 0) {
-        Serial.print("Toimi! RTT = ");
+        Serial.print("Jummijammi se toimi, ");
         Serial.print(String(pingResult));
         Serial.println(" ms");
     } else {
-        Serial.print("FAILED! Error code: ");
+        Serial.print("Ei toimi, errori: ");
         Serial.println(String(pingResult));
     }
 }
