@@ -46,7 +46,7 @@ app.post("/api/give_orders", function (req, res) {
       console.log(err);
     }
   });
-  console.log("servo.tell_servo = " + servo.tell_servot);
+  console.log("servo.tell_servo = " + servo.tell_servo);
 });
 app.post("/api/upload", function (req, res) {
 	console.log("vittu tää toimii");

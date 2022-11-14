@@ -73,8 +73,13 @@
       </div>
 
       <div id="second-child">
-        <button id="start-button" onclick="activity('start')">Lämmitys on</button>
-        <button id="stop-button" onclick="activity('stop')">Lämmitys off</button>
+				<div>
+					<button id="get-button" onclick="getvalues()">Hae tiedot</button>
+				</div>
+				<div>
+					<button id="start-button" onclick="activity('start')">Lämmitys on</button>
+					<button id="stop-button" onclick="activity('stop')">Lämmitys off</button>
+				</div>
 
 				<p id="hauska-viesti">Nämä napit ei toimi, sori.<br>
 				Kiva kuitenki et kävit ja toivottavasti näit edes lukuja!</p>
@@ -85,8 +90,6 @@
 
     <script>
 			//hakee lämpötilat näytölle serveriltä
-			getvalues();
-
 			function getvalues() {
         fetch("/data", {
           method: "post",
@@ -134,7 +137,6 @@
 
 			//tää kertois servolle et sammutaanko vai pyöritäänkö 
       function activity(x) {
-        let x = x;
 
         if (x == "start") 
 				{
