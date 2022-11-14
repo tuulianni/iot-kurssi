@@ -2,56 +2,86 @@
 <html lang="en">
   <head>
 
-    <title>Control panel</title>
+    <title>IOT-Hackers69</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" href="./style.css" />-->
-    <!--<script src="script.js"></script>-->
+
     <style>
       body {
-        background-color: #c1c1c1;
+        background-color: #000;
 				font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
 
+			h1 {
+				text-decoration: underline;
+				text-transform: capitalize;
+			}
+
+			h2 {
+				font-weight: 400;
+				font-size: 2rem;
+			}
+
       #mom-div {
-        width: 800px;
-        padding: 20px;
-        margin: auto;
+				width: 800px;
+				padding: 20px;
+				margin: auto;
 				margin-top: 50px;
-        background-color: #000;
+				margin-bottom: 50px;
+				background-color: #faf0be;
 				text-align: center;
 				font-size: 25px;
+				border-radius: 20px;
+				color: #000;
       }
 
       #first-head {      
-        color: #ffffff;
 				padding: 5px;
       }
 
       #first-child, #second-child {
         width: 600px;
-        color: #fff;
 				margin: auto;
       }
+
+			#second-child {
+				padding-top: 50px;
+				padding-bottom: 50px;
+				width: 500px;
+
+			}
 
       #temp-display, #hum-display {
         width: 200px;
         height: 50px;
         font-size: 30px;
 				margin: auto;
-				color: #fff;
       }
 
 			button {
-				border-radius: 35px;
-				background-color: #fff;
+				border-radius: 20px;
+				background-color: #deb887;
 				padding: 20px;
         font-size: 30px;
-				margin-top: 50px;
 				margin-left: 15px;
 				margin-right: 15px;
+				border: none;
+				font-size: 1.5rem;
 		
+			}
+
+			button:hover {
+
+				border-radius: 35px;
+				cursor: pointer;
+
+
+			}
+
+			#hauska-viesti {
+				text-decoration: wavy;
+				font-size: smaller;
 			}
     </style>
   </head>
@@ -63,11 +93,13 @@
       </div>
 
       <div id="first-child">
-				<div id="temp-box"><p>Lämpötila:</p>
+				<div id="temp-box">
+					<h2>Lämpötila:</h2>
 					<div id="temp-display"></div>
-
 				</div>
-				<div id = "hum-box"><p>Ilmankosteus:</p>
+
+			<div id = "hum-box">
+					<h2>Ilmankosteus:</h2>
 					<div id="hum-display"></div>
 				</div>
       </div>
@@ -77,12 +109,12 @@
 					<button id="get-button" onclick="getvalues()">Hae tiedot</button>
 				</div>
 				<div>
+					<p id="hauska-viesti">Nämä lämmitysnapit ei toimi, sori.<br>
+						Kiva kuitenki et kävit ja toivottavasti näit edes lukuja!</p>
+
 					<button id="start-button" onclick="activity('start')">Lämmitys on</button>
 					<button id="stop-button" onclick="activity('stop')">Lämmitys off</button>
 				</div>
-
-				<p id="hauska-viesti">Nämä napit ei toimi, sori.<br>
-				Kiva kuitenki et kävit ja toivottavasti näit edes lukuja!</p>
 
       </div>
     </div>
