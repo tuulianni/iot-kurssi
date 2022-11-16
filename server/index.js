@@ -60,7 +60,7 @@ app.post("/api/give_orders", function (req, res) {
 
 
 app.post("/api/upload", function (req, res) {
-	console.log("ihme tää toimii");
+	console.log("onpas nyt mukava juttu, että tää toimii <3");
   let humidity = req.body.humidity;
   let temperature = req.body.temperature;
   let valuesJson = JSON.stringify({
@@ -76,10 +76,19 @@ app.post("/api/upload", function (req, res) {
       console.log(err);
     }
   });
-
+	if (temperature < 17) {
+		res.write("&on#")
+	}
+	else if (temperature > 21) {
+		res.write("&off#")
+	}
+	else {
+		res.write("&jumpe#")
+	}
+	
 });
 
-const server = app.listen(8080, function () {
+const server = app.listen(65535, function () {
   const host = server.address().address;
   const port = server.address().port;
 

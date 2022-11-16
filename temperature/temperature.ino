@@ -20,7 +20,7 @@ char pass[] = SECRET_PASS;                // verkon salasana
 char servername[] = SECRET_SERVERNAME;    // verkon ip, ipconfig
 
 //serverin portti, testaa portteja 49152 - 65535 väliltä, muista vaihtaa se myös serverille
-int serverport = 8080;
+int serverport = 65535;
 
 //asenna ArduinoJson !!
 #include <ArduinoJson.h>
@@ -44,6 +44,8 @@ DHT dht(DHTPIN, DHTTYPE);
 
 float temperature;  //current
 float humidity;     //current
+
+String x; //Serveriltä tuleva viesti 
 
 //Json tallentaa tietoja, muuttujat ovat:
 //["temperature"]
@@ -105,7 +107,7 @@ void show_display() {
       display.clearDisplay();
       //aseta teksti paikkaan
       display.setCursor(5,5);
-      display.print("Tarkenee!");
+      display.print(x);
       display.setCursor(5,15);
       display.print(String(t) + "C ja " + String(h) + "%");
 
@@ -118,7 +120,7 @@ void show_display() {
       display.clearDisplay();
       //aseta teksti paikkaan
       display.setCursor(5,5);
-      display.print("Polttaa!");
+      display.print(x);
       display.setCursor(5,15);
       display.print(String(t) + "C ja " + String(h) + "%");
 
@@ -130,7 +132,7 @@ void show_display() {
       display.clearDisplay();
       //aseta teksti paikkaan
       display.setCursor(5,5);
-      display.print("Palelee!");
+      display.print(x);
       display.setCursor(5,15);
       display.print(String(t) + "C ja " + String(h) + "%");
 
@@ -185,6 +187,18 @@ int upload_data(char *host, int port) {
             client.println(measureJson(temphum_json));
             client.println();
             serializeJson(temphum_json, client);
+
+            //tässä luetaan serveriltä juduja
+            x = client.readString();
+            x.trim();
+
+            int startof = x.indexOf("&");
+            int stopof = x.indexOf("#");
+            x = x.substring(startof +1, stopof);
+
+            Serial.println(x);
+            
+            
         } else {
             Serial.println("juu ei toimi tää paske");
         }
