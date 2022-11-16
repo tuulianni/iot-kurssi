@@ -1,1 +1,1 @@
-{"servo_order":"1"}
+{"tell_servo":"1"}
